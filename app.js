@@ -1,21 +1,23 @@
-const http = require('http');
+//  npm - global command, comes with node
+//  npm --version
 
-//  Create server takes a callback that has two parameters (req, res)
-//    req = incoming request
-//    res = response, what we're sending back
-const server = http.createServer((req, res) => {
-  if (req.url === '/') {
-    res.end('Welcome to our home page.');
-  } else if (req.url === '/about') {
-    res.end('Here is our history');
-  } else {
-    res.end(`
-      <h1>Oops!</h1>
-      <a href="/">Back to home</a>
-      `);
-  }
-});
+//  local dependency - use it only in this particular project
+//  npm i <packageName>
 
-//  When we create a server, we need to identify what port our server will listen to
-//  Web servers will continue to listen to requests
-server.listen(5000);
+//  global dependency - use it in any project
+//  npm instlal -g <packageName> (mac)
+//  sudo npm install -g <packageName>
+
+//  package.json - manifest file (stores important info about project/package)
+//  manual approach (create package.json in root, create props, etc)
+//  npm init (step by step, press enter to skip)
+//  npm init -y (everything default)
+
+//  if you want to publish a package, the name must be unique
+
+const _ = require('lodash'); //  must install dependencies first to use it
+
+const items = [1, [2, [3, [4]]]];
+const newItems = _.flattenDeep(items);
+
+console.log(newItems);
