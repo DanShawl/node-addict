@@ -1,23 +1,55 @@
-//  npm - global command, comes with node
-//  npm --version
+//  We can add tag on .promises to grab promise functionality built into our readfile
+const { readFile, writeFile } = require('fs').promises;
 
-//  local dependency - use it only in this particular project
-//  npm i <packageName>
+//  util gives us promise functionality without writing out a full promise
+//  we need to pass the path AS WELL AS the encoding 'utf8'
+// const util = require('util');
+// const readFilePromise = util.promisify(readFile);
+// const writeFilePromise = util.promisify(writeFile);
 
-//  global dependency - use it in any project
-//  npm instlal -g <packageName> (mac)
-//  sudo npm install -g <packageName>
+//  common practice to utilize try/catch block
+const start = async () => {
+  try {
+    const first = await readFile('./content/first.txt', 'utf8');
+    const second = await readFile('./content/second.txt', 'utf8');
+    await writeFile(
+      './content/result-mind-grenade.txt',
+      `THIS IS A FILE: ${first}, ${second}`,
+      { flag: 'a' }
+    );
 
-//  package.json - manifest file (stores important info about project/package)
-//  manual approach (create package.json in root, create props, etc)
-//  npm init (step by step, press enter to skip)
-//  npm init -y (everything default)
+    console.log(first, second);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-//  if you want to publish a package, the name must be unique
+start();
 
-const _ = require('lodash'); //  must install dependencies first to use it
+//  Creating a promise
+//  This is simplified with the util 'promisify()'
+// const getText = (path) => {
+//   return new Promise((resolve, reject) => {
+//     readFile(path, 'utf8', (err, data) => {
+//       if (err) {
+//         reject(err);
+//       } else {
+//         resolve(data);
+//       }
+//     });
+//   });
+// };
 
-const items = [1, [2, [3, [4]]]];
-const newItems = _.flattenDeep(items);
+//  Chaining .then() and .catch() for a promise
+//  replaced with async await start() function
+// getText('./content/first.txt')
+//   .then((result) => console.log(result))
+//   .catch((err) => console.log(err));
 
-console.log(newItems);
+// readFile('./content/first.txt', 'utf8', (err, data) => {
+//   if (err) {
+//     return;
+//   } else {
+//     console.log(data);
+//   }
+// });
